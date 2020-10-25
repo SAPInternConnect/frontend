@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Link from '@material-ui/core/Link';
 import history from './history';
+import Icon from '@material-ui/core/Icon';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,6 +43,7 @@ function HeaderNonAuth() {
                     SAP Intern Connect App
                 </Link>
                 </Typography>
+                <Button color="inherit" href={ROUTES.HOME}>Home</Button>
                 <Button color="inherit" href={ROUTES.LOGIN}>Login</Button>
                 <Button color="inherit" href={ROUTES.SIGNUP}>Sign-Up</Button>
                 <Button color="inherit" href={ROUTES.MYPROFILE}>My Profile</Button>
@@ -63,12 +65,13 @@ function HeaderAuth() {
         <div className={classes.root}>
         <AppBar position="static">
             <Toolbar>
-               
+                <img src="/sapconect-logo.png" style={{width:40, height:40, marginRight: 10}}/>
                 <Typography variant="h5" className={classes.title} >
                 <Link href={ROUTES.HOME} color="secondary" underline="none">
                     SAP Intern Connect App
                 </Link>
                 </Typography>
+                <Button color="inherit" href={ROUTES.HOME}>Home</Button>
                 <Button color="inherit" href={ROUTES.MYPROFILE}>My Profile</Button>
                 <Button color="inherit" href={ROUTES.MYFRIENDS}>My Friends</Button>
                 <Button color="inherit" onClick={signOut}>Sign Out</Button>
