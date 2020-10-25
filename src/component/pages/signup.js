@@ -108,37 +108,7 @@ class signup extends Component {
 			});
 	};
 
-	profilePictureHandler = (event) => {
-		event.preventDefault();
-		this.setState({
-			uiLoading: true
-		});
-		authMiddleWare(this.props.history);
-		const authToken = localStorage.getItem('AuthToken');
-		let form_data = new FormData();
-		form_data.append('image', this.state.image);
-		form_data.append('content', this.state.content);
-		axios.defaults.headers.common = { Authorization: `${authToken}` };
-		axios
-			.post('/user/image', form_data, {
-				headers: {
-					'content-type': 'multipart/form-data'
-				}
-			})
-			.then(() => {
-				window.location.reload();
-			})
-			.catch((error) => {
-				if (error.response.status === 403) {
-					this.props.history.push('/login');
-				}
-				console.log(error);
-				this.setState({
-					uiLoading: false,
-					imageError: 'Error in posting the data'
-				});
-			});
-	};
+	
 
 	render() {
 		const { classes } = this.props;
@@ -304,31 +274,7 @@ class signup extends Component {
 									onChange={this.handleChange}
 								/>
 							</Grid>
-						</Grid>		<Grid item s={6}>
-									<Button
-										variant="outlined"
-										color="primary"
-										type="submit"
-										size="small"
-										startIcon={<CloudUploadIcon />}
-										className={classes.uploadButton}
-										onClick={this.profilePictureHandler}
-									>
-										Upload Photo
-									</Button>
-									</Grid>
-									<Grid s={6}>
-									<input type="file" onChange={this.handleImageChange} />
-
-									{this.state.imageError ? (
-										<div className={classes.customError}>
-											{' '}
-											Wrong Image Format || Supported Format are PNG and JPG
-										</div>
-									) : (
-										false
-									)}
-									</Grid>
+						</Grid>		
 						<Button
 							type="submit"
 							fullWidth
@@ -341,9 +287,9 @@ class signup extends Component {
                                 !this.state.password ||
                                 !this.state.firstName || 
                                 !this.state.lastName ||
-                                !this.state.country || 
-                                !this.state.username || 
-                                !this.state.phoneNumber}
+                                !this.state.city || 
+                                !this.state.bio || 
+                                !this.state.position}
 						>
 							Sign Up
 							{loading && <CircularProgress size={30} className={classes.progess} />}

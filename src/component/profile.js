@@ -105,6 +105,7 @@ class Profile extends Component {
 					age: response.data.userCredentials.age,
 					position: response.data.userCredentials.position,
 					city: response.data.userCredentials.city,
+					profilePicture: response.data.userCredentials.imageUrl,
 					uiLoading: false
 				});
 			})
