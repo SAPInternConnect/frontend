@@ -42,6 +42,7 @@ const Header = () =>  {
                 </Link>
                 </Typography>
                 <Button color="inherit" href={ROUTES.LOGIN}>Login</Button>
+                <Button color="inherit" href={ROUTES.SIGNUP}>Sign-Up</Button>
                 <Button color="inherit" href={ROUTES.MYPROFILE}>My Profile</Button>
                 <Button color="inherit" href={ROUTES.MYFRIENDS}>My Friends</Button>
             </Toolbar>

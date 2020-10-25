@@ -40,7 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:5000/sapconnect-42519/us-central1/api/"
 }
 
 

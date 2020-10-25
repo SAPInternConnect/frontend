@@ -24,6 +24,7 @@ class login extends Component {
 			loading: false
 		};
 	}
+	
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.UI.errors) {
@@ -39,29 +40,30 @@ class login extends Component {
 		});
 	};
 
-	// handleSubmit = (event) => {
-	// 	event.preventDefault();
-	// 	this.setState({ loading: true });
-	// 	const userData = {
-	// 		email: this.state.email,
-	// 		password: this.state.password
-	// 	};
-	// 	axios
-	// 		.post('/login', userData)
-	// 		.then((response) => {
-	// 			localStorage.setItem('AuthToken', `Bearer ${response.data.token}`);
-	// 			this.setState({ 
-	// 				loading: false,
-	// 			});		
-	// 			this.props.history.push('/');
-	// 		})
-	// 		.catch((error) => {				
-	// 			this.setState({
-	// 				errors: error.response.data,
-	// 				loading: false
-	// 			});
-	// 		});
-	// };
+	handleSubmit = (event) => {
+		event.preventDefault();
+		this.setState({ loading: true });
+		const userData = {
+			email: this.state.email,
+			password: this.state.password
+		};
+		axios
+			.post('/login', userData)
+			.then((response) => {
+				localStorage.setItem('AuthToken', `Bearer ${response.data.token}`);
+				this.setState({ 
+					loading: false,
+				});		
+				
+				this.props.history.push('/');
+			})
+			.catch((error) => {				
+				this.setState({
+					errors: error.response.data,
+					loading: false
+				});
+			});
+	};
 
 	render() {
 		const { classes } = this.props;
