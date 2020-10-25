@@ -59,7 +59,9 @@ const styles = (theme) => ({
         margin:50,
         borderWidth: 1,
         borderColor: 'gray',
-        borderStyle: 'solid'
+		borderStyle: 'solid',
+		borderRadius: 10,
+		padding: 20
     },
     Button: {
         position: 'absolute',
@@ -68,17 +70,18 @@ const styles = (theme) => ({
 	toolbar: theme.mixins.toolbar
 });
 
+
 class Profile extends Component {
     constructor(props) {
         super();
 
         this.state = {
-			firstName: 'S',
-            lastName: 'K',
-            bio: 'my name is silvana hi hello whatsup',
+			firstName: '',
+            lastName: '',
+            bio: '',
             profilePicture: '',
-            location: 'Vancouver',
-            school: 'BCIT',
+            location: '',
+            school: '',
 			uiLoading: false,
             imageLoading: false,
             editing: false
@@ -97,9 +100,11 @@ class Profile extends Component {
 					firstName: response.data.userCredentials.firstName,
 					lastName: response.data.userCredentials.lastName,
 					email: response.data.userCredentials.email,
-					phoneNumber: response.data.userCredentials.phoneNumber,
-					country: response.data.userCredentials.country,
 					username: response.data.userCredentials.username,
+					bio: response.data.userCredentials.bio,
+					age: response.data.userCredentials.age,
+					position: response.data.userCredentials.position,
+					city: response.data.userCredentials.city,
 					uiLoading: false
 				});
 			})
@@ -124,16 +129,15 @@ class Profile extends Component {
 			return (
 				<div className={classes.root}>
 					<CssBaseline />
-					<Grid container spacing={3}>
-					<Grid item key="basicInfo" md={4}>
+					<Grid container spacing={3}  alignItems="center">
+					<Grid item key="basicInfo" lg={12} fullWidth style={{marginLeft: 50, marginTop: 10}}>
 						<div className={classes.toolbar} />
-						<Divider />
 						<center>
 							<Avatar src={this.state.profilePicture} className={classes.avatar} />
-							<p>
+							<Typography variant="h3" style={{margin: 20}}>
 								{''}
 								{this.state.firstName} {this.state.lastName}
-							</p>
+							</Typography>
 						</center>
 						<Divider />
 						<List>
@@ -143,7 +147,7 @@ class Profile extends Component {
 									{' '}
 									<AccountBoxIcon />{' '}
 								</ListItemIcon>
-								<ListItemText primary={this.state.location} />
+								<ListItemText primary={this.state.city} />
 							</ListItem>
 
 							<ListItem key="school">
@@ -151,16 +155,15 @@ class Profile extends Component {
 									{' '}
 									<ExitToAppIcon />{' '}
 								</ListItemIcon>
-								<ListItemText primary={this.state.school} />
+								<ListItemText primary={this.state.position} />
 							</ListItem>
 						</List>
 					</Grid>
                     </Grid>
-                    <Grid container md={8}>
+                    <Grid container lg={12}  alignItems="center" style={{display: 'flex'}}>
                     
-                    <Grid item>
-                    <Button className={classes.Button}>edit</Button>
-                        <Grid item className={classes.Grid}>
+                    <Grid item  style={{width: '100%', flex: "1 1 auto"}}>
+                        <Grid item className={classes.Grid}  style={{textAlign: "center"}}>
                         
                         <Typography variant="h2">
                             About {this.state.firstName}
@@ -170,12 +173,7 @@ class Profile extends Component {
                         </p>
                         </Grid>
                     </Grid>
-                    
-                    <Grid item key="interests" md={8} className={classes.Grid} >
-                    <Typography variant="h2" >
-                            {this.state.firstName}'s Interests
-                        </Typography>
-                    </Grid>
+                  
                     </Grid>
 
 				</div>

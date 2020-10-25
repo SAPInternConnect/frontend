@@ -14,6 +14,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { Card, CardActions, CardContent, Divider } from '@material-ui/core';
+import {authMiddleWare} from '../auth';
 
 import axios from 'axios';
 
@@ -48,12 +49,14 @@ class signup extends Component {
 		this.state = {
 			firstName: '',
 			lastName: '',
-			phoneNumber: '',
-			country: '',
 			username: '',
 			email: '',
 			password: '',
 			confirmPassword: '',
+			position: '',
+			city: '',
+			age: '',
+			bio:'',
 			errors: [],
 			loading: false
 		};
@@ -79,12 +82,14 @@ class signup extends Component {
 		const newUserData = {
 			firstName: this.state.firstName,
 			lastName: this.state.lastName,
-			phoneNumber: this.state.phoneNumber,
-			country: this.state.country,
 			username: this.state.username,
 			email: this.state.email,
 			password: this.state.password,
-			confirmPassword: this.state.confirmPassword
+			confirmPassword: this.state.confirmPassword,
+			position: this.state.position,
+			city: this.state.city,
+			age: this.state.age,
+			bio: this.state.bio
 		};
 		axios
 			.post('/signup', newUserData)
@@ -99,6 +104,38 @@ class signup extends Component {
 				this.setState({
 					errors: error.response.data,
 					loading: false
+				});
+			});
+	};
+
+	profilePictureHandler = (event) => {
+		event.preventDefault();
+		this.setState({
+			uiLoading: true
+		});
+		authMiddleWare(this.props.history);
+		const authToken = localStorage.getItem('AuthToken');
+		let form_data = new FormData();
+		form_data.append('image', this.state.image);
+		form_data.append('content', this.state.content);
+		axios.defaults.headers.common = { Authorization: `${authToken}` };
+		axios
+			.post('/user/image', form_data, {
+				headers: {
+					'content-type': 'multipart/form-data'
+				}
+			})
+			.then(() => {
+				window.location.reload();
+			})
+			.catch((error) => {
+				if (error.response.status === 403) {
+					this.props.history.push('/login');
+				}
+				console.log(error);
+				this.setState({
+					uiLoading: false,
+					imageError: 'Error in posting the data'
 				});
 			});
 	};
@@ -147,7 +184,7 @@ class signup extends Component {
 								/>
 							</Grid>
 
-							<Grid item xs={12} sm={6}>
+							<Grid item xs={12} >
 								<TextField
 									variant="outlined"
 									required
@@ -164,22 +201,7 @@ class signup extends Component {
 
 							
 
-							<Grid item xs={12} sm={6}>
-								<TextField
-									variant="outlined"
-									required
-									fullWidth
-									id="phoneNumber"
-									label="Phone Number"
-									name="phoneNumber"
-									autoComplete="phoneNumber"
-									pattern="[7-9]{1}[0-9]{9}"
-									helperText={errors.phoneNumber}
-									error={errors.phoneNumber ? true : false}
-									onChange={this.handleChange}
-								/>
-							</Grid>
-
+							
 							<Grid item xs={12}>
 								<TextField
 									variant="outlined"
@@ -195,20 +217,7 @@ class signup extends Component {
 								/>
 							</Grid>
 
-							<Grid item xs={12}>
-								<TextField
-									variant="outlined"
-									required
-									fullWidth
-									id="country"
-									label="Country"
-									name="country"
-									autoComplete="country"
-									helperText={errors.country}
-									error={errors.country ? true : false}
-									onChange={this.handleChange}
-								/>
-							</Grid>
+							
 							<Grid item xs={12}>
 								<TextField
 									variant="outlined"
@@ -295,8 +304,8 @@ class signup extends Component {
 									onChange={this.handleChange}
 								/>
 							</Grid>
-						</Grid>
-						<Button
+						</Grid>		<Grid item s={6}>
+									<Button
 										variant="outlined"
 										color="primary"
 										type="submit"
@@ -307,6 +316,8 @@ class signup extends Component {
 									>
 										Upload Photo
 									</Button>
+									</Grid>
+									<Grid s={6}>
 									<input type="file" onChange={this.handleImageChange} />
 
 									{this.state.imageError ? (
@@ -317,6 +328,7 @@ class signup extends Component {
 									) : (
 										false
 									)}
+									</Grid>
 						<Button
 							type="submit"
 							fullWidth

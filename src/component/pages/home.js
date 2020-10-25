@@ -2,6 +2,8 @@ import React from 'react';
 import UserCard from '../../component/UserCard';
 import '../../style/Home.css';
 import axios from 'axios';
+import {authMiddleWare} from '../auth'
+import history from '../history';
 
 const db = [
     {
@@ -32,11 +34,13 @@ const db = [
   ]
 
 function Home() {
-
+  const authToken = localStorage.getItem('AuthToken');
+    if(authToken === null){
+        history.push('/login')
+    }
     const users = db;
 
     return (<div>
-        <h1> this is the home page</h1>
         
         <UserCard users={users}/>
 

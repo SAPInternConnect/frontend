@@ -26,13 +26,13 @@ class login extends Component {
 	}
 	
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.UI.errors) {
-			this.setState({
-				errors: nextProps.UI.errors
-			});
-		}
-	}
+	// componentWillReceiveProps(nextProps) {
+	// 	if (nextProps.UI.errors) {
+	// 		this.setState({
+	// 			errors: nextProps.UI.errors
+	// 		});
+	// 	}
+	// }
 
 	handleChange = (event) => {
 		this.setState({
