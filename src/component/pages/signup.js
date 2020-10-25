@@ -210,7 +210,7 @@ class signup extends Component {
 									fullWidth
 									id="age"
 									label="Age"
-									name="Age"
+									name="age"
 									helperText={errors.age}
 									error={errors.age ? true : false}
 									onChange={this.handleChange}
