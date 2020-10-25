@@ -29,21 +29,33 @@ const db = [
     {
       name: 'Dinesh Chugtai',
       position: 'software engineer intern',
-      url: 'https://pbs.twimg.com/media/EMR0_AeUwAEthPT?format=jpg&name=medium'
+      url: 'https://firebasestorage.googleapis.com/v0/b/sapconnect-42519.appspot.com/o/kei.jpg?alt=media'
     }
   ]
 
 function Home() {
+
   const authToken = localStorage.getItem('AuthToken');
     if(authToken === null){
         history.push('/login')
     }
-    const users = db;
 
-    return (<div>
-        
+  const [users, setUsers] = React.useState([]);
+
+  React.useEffect(() => {
+    const authToken = localStorage.getItem('AuthToken');
+    axios.defaults.headers.common = { Authorization: `${authToken}` };
+    axios.get('/users')
+    .then(response => {
+      console.log(response.data);
+      setUsers(response.data);
+    })
+    .catch(error => console.log(error));
+    }, []);
+
+  
+    return (<div>   
         <UserCard users={users}/>
-
     </div>
     )
 }

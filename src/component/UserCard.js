@@ -4,7 +4,10 @@ import '../style/UserCard.css';
 
 function UserCard({users}) {
 
-  const [connect, setConnect] = React.useState(false);
+  console.log("User card: ");
+  console.log(users);
+
+  const [connect, setConnect] = React.useState();
 
   const swiped = (direction) => {
     console.log(direction);
@@ -28,20 +31,20 @@ function UserCard({users}) {
             {users.map((character) =>
              <TinderCard 
                 className='swipe' 
-                key={character.name} 
+                key={character.userId} 
                 onSwipe={(dir) => swiped(dir)} 
-                onCardLeftScreen={() => outOfFrame(character.name)}
+                onCardLeftScreen={() => outOfFrame(character.firstName)}
                 preventSwipe={['up', 'down']}>
                     
-                <div style={{ backgroundImage: 'url(' + character.url + ')' }} className='card'>
+                <div style={{ backgroundImage: 'url(' + character.imageUrl + ')' }} className='card'>
               
-                <h3 style={{ color: 'white'}}>{character.name}</h3>
+                <h3 style={{ color: 'white'}}>{`${character.firstName} ${character.lastName}`}</h3>
 
                 </div>
             </TinderCard>
             )}
         </div>
-        
+   
         {connect ? 
         <h2 className='infoText'>Request to connect sent!</h2>
          : 
