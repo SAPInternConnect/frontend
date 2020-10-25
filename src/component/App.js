@@ -7,6 +7,7 @@ import home from './pages/home'
 import friends from '../component/friends'
 import profile from '../component/profile'
 import signUp from './pages/signup'
+import '../style/App.css'
 
 class App extends Component {
 

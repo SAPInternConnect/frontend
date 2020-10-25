@@ -1,0 +1,59 @@
+/* source:
+https://github.com/3DJakob/react-tinder-card-demo/blob/master/src/App.css 
+*/
+
+
+.userCardSection > h1 {
+  text-align: center;
+}
+
+.swipe {
+  position: absolute;
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 5vh;
+}
+
+.card {
+  position: relative;
+  width: 600px;
+  max-width: 85vw;
+  height: 50vh;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 3px 7px 3px rgba(0, 0, 0, .1);
+}
+
+.card > h3 {
+  position: absolute;
+  font-size: 34pt;
+  bottom: 40px;
+  margin: 10px;
+  color: #fff;
+}
+
+.infoText {
+  position: absolute;
+  bottom: 50px;
+  width: 100%;
+  height: 28px;
+  justify-content: center;
+  display: flex;
+  color: black;
+  animation-name: popup;
+  animation-duration: 800ms;
+}
+
+@keyframes popup {
+  0%   { transform: scale(1,1) }
+  10%  { transform: scale(1.1,1.1) }
+  30%  { transform: scale(.9,.9) }
+  50%  { transform: scale(1,1) }
+  57%  { transform: scale(1,1) }
+  64%  { transform: scale(1,1) }
+  100% { transform: scale(1,1) }
+}
