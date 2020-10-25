@@ -12,14 +12,15 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import withStyles from '@material-ui/core/styles/withStyles';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import NotesIcon from '@material-ui/icons/Notes';
+import Work from '@material-ui/icons/Work';
 import Grid from '@material-ui/core/Grid'
 import Avatar from '@material-ui/core/avatar';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button'
 import {authMiddleWare} from './auth'
+import { LocationCityOutlined } from '@material-ui/icons';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 const drawerWidth = 500;
 
@@ -118,6 +119,38 @@ class Profile extends Component {
 			});
 	};
 
+	profilePictureHandler = (event) => {
+		event.preventDefault();
+		this.setState({
+			uiLoading: true
+		});
+		authMiddleWare(this.props.history);
+		const authToken = localStorage.getItem('AuthToken');
+		let form_data = new FormData();
+		form_data.append('image', this.state.image);
+		form_data.append('content', this.state.content);
+		axios.defaults.headers.common = { Authorization: `${authToken}` };
+		axios
+			.post('/user/image', form_data, {
+				headers: {
+					'content-type': 'multipart/form-data'
+				}
+			})
+			.then(() => {
+				window.location.reload();
+			})
+			.catch((error) => {
+				if (error.response.status === 403) {
+					this.props.history.push('/login');
+				}
+				console.log(error);
+				this.setState({
+					uiLoading: false,
+					imageError: 'Error in posting the data'
+				});
+			});
+	};
+
     render() {
         const { classes } = this.props;
         if (this.state.uiLoading === true) {
@@ -130,7 +163,7 @@ class Profile extends Component {
 			return (
 				<div className={classes.root}>
 					<CssBaseline />
-					<Grid container spacing={3}  alignItems="center">
+					<Grid container spacing={3}  alignItems="center" sm={12}>
 					<Grid item key="basicInfo" lg={12} fullWidth style={{marginLeft: 50, marginTop: 10}}>
 						<div className={classes.toolbar} />
 						<center>
@@ -139,29 +172,41 @@ class Profile extends Component {
 								{''}
 								{this.state.firstName} {this.state.lastName}
 							</Typography>
+							<Button style={{marginBottom: 10}}
+										variant="outlined"
+										color="primary"
+										type="submit"
+										size="small"
+										startIcon={<CloudUploadIcon />}
+										className={classes.uploadButton}
+										onClick={this.profilePictureHandler}
+									>
+										Upload Photo
+									</Button>
+									<input type="file" onChange={this.handleImageChange} style={{marginLeft:10, marginBottom:15}}/>
 						</center>
 						<Divider />
 						<List>
 							
-							<ListItem button key="Account">
+							<ListItem button key="position">
 								<ListItemIcon>
 									{' '}
-									<AccountBoxIcon />{' '}
-								</ListItemIcon>
-								<ListItemText primary={this.state.city} />
-							</ListItem>
-
-							<ListItem key="school">
-								<ListItemIcon>
-									{' '}
-									<ExitToAppIcon />{' '}
+									<Work />{' '}
 								</ListItemIcon>
 								<ListItemText primary={this.state.position} />
+							</ListItem>
+
+							<ListItem key="city">
+								<ListItemIcon>
+									{' '}
+									<LocationCityOutlined />{' '}
+								</ListItemIcon>
+								<ListItemText primary={this.state.city} />
 							</ListItem>
 						</List>
 					</Grid>
                     </Grid>
-                    <Grid container lg={12}  alignItems="center" style={{display: 'flex'}}>
+                    <Grid container lg={12}  alignItems="center" style={{display: 'flex'}} sm={12}>
                     
                     <Grid item  style={{width: '100%', flex: "1 1 auto"}}>
                         <Grid item className={classes.Grid}  style={{textAlign: "center"}}>
