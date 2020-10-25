@@ -98,7 +98,7 @@ class signup extends Component {
 				this.setState({ 
 					loading: false,
 				});	
-				this.props.history.push('/');
+				this.props.history.push(ROUTES.MYPROFILE);
 			})
 			.catch((error) => {
 				this.setState({
@@ -224,7 +224,7 @@ class signup extends Component {
 									fullWidth
 									id="position"
 									label="Position at SAP"
-									name="positionAtSAP"
+									name="position"
 									helperText={errors.position}
 									error={errors.position ? true : false}
 									onChange={this.handleChange}
